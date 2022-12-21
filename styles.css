@@ -12,6 +12,10 @@ body {
     padding: 0.5%;
 }
 
+a {
+    color: white;
+}
+
 body, #input {
     background: #222222;
     font-family: monospace;
