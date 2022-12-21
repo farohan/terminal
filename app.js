@@ -19,7 +19,7 @@ input.addEventListener('keypress', event => {
                 storeData();
             }
             else if (containsNumbers(input.value)) {
-                mathEngine();
+                mathEngine(input.value);
             }
             else {
                 basicCommands(input.value);
@@ -34,12 +34,14 @@ function containsNumbers(str) {
     return /\d/.test(str);
 }
 
-function mathEngine() {
-
+function mathEngine(expression) {
+    let result = Function('return ' + expression)();
+    output.innerHTML += `${result} <br>`;
 }
 
 function URLOpener(url) {
     const webAddress = url.replace('url', '');
+    output.innerHTML += `Opened <a href=${webAddress} target='_blank'> ${webAddress} </a> <br>`;
     window.open(webAddress);
 }
 
