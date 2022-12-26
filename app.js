@@ -16,7 +16,13 @@ input.addEventListener('keypress', event => {
                 URLOpener(input.value);
             }
             else if (input.value.includes('store')) {
-                storeData();
+                storeData(input.value);
+            }
+            else if (input.value.includes('fetch')) {
+                fetchData(input.value);
+            }
+            else if (input.value.includes('delete')) {
+                removeData(input.value);
             }
             else if (containsNumbers(input.value)) {
                 mathEngine(input.value);
@@ -45,13 +51,34 @@ function URLOpener(url) {
     window.open(webAddress);
 }
 
-function storeData() {
+function storeData(data) {
+    const keyValuePair = data.replace('store ', '');
+    const keyValueSet = keyValuePair.split(' ');
+    localStorage.setItem(keyValueSet[0], keyValueSet[1]);
+    output.innerHTML += `Saved '${keyValueSet[1]}' as '${keyValueSet[0]}' <br>`;
+}
 
+function fetchData(data) {
+    const fetchedKey = data.replace('fetch ', '');
+    output.innerHTML += `${localStorage.getItem(fetchedKey)} <br>`;
+}
+
+function removeData(data) {
+    const deletedKey = data.replace('delete ', '');
+    localStorage.removeItem(deletedKey);
+    output.innerHTML += `'${deletedKey}' deleted <br>`;
 }
 
 function basicCommands(command) {
     if (command == 'clear') {
         output.innerHTML = '';
+    }
+    if (command == 'clear storage') {
+        localStorage.clear();
+        output.innerHTML += 'Storage cleared. <br>';
+    }
+    if (command == 'storage data') {
+        output.innerHTML += `${Object.keys(localStorage)} <br>`;
     }
     if (command == 'help') {
         output.innerHTML += '404 - Help Not Available <br>';
